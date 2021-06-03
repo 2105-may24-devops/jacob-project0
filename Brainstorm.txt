@@ -1,0 +1,64 @@
+Asset Management System
+=======================
+
+Basic Functionality: (i.e., quick and dirty minimum functionality)
+--------------------
+- create a new database file
+- read/write database from/to a file and to/from a Python data structure (pickle)
+- add record
+    - menu-driven query
+    - from file
+- remove record
+- update record
+- search by key
+- automatically generate unique primary keys for each record
+- display database to terminal
+- interface is text-based and menu-driven
+- can produce asset replacement reports
+    - What assets will reach their expected replacement date between the present and some deadline
+    - Projected cost of replacing expiring assets
+
+
+Advanced Functionality: (i.e., things I believe I can implement using current skills/knowledge to improve the product, but will take more time)
+-----------------------
+- Allow terminal-driven access to full functionality
+    - all functionality is accessible via argument passing
+    - menu-driven interface displayed when no arguments are provided
+    - usage statement is displayed when unexpected/erroneous arguments are provided
+- display database (full, partial) formatted
+    - output to terminal
+    - output to file
+- request assessments/reports
+    - Costs expected in a given timeframe (this month, within 3 months, by given date, etc)
+    - List expected re-purchases, including purchase location for re-purchase assistance
+
+
+Future Functionality: (i.e., things I don't know how to implement, but hope to learn)
+---------------------
+- Automate periodic reports; generate email or similar notification
+- Facilitate re-orders
+    - pull information from websites for current cost to re-order for web purchases
+    - search web for information on in-store and mail-ordered purchases
+    - allow purchase authorization via email (link click?) from an authorized source
+        - complete purchase with a one-click (or very simple) authorization
+    - validate credentials to ensure that the purchase request was authorized appropriately before ordering
+- Initialize database in to Python data structure only when using the menu-driven interface
+    - begin initialization on a separate thread immediately before entering the menu-driven interface
+- assumes multiple actions will be taken
+- loading the database in to Python data structures will allow quicker manipulation by only reading/writing to the file at the beginning/end of the session
+    - QUESTION: when is it faster to overwrite the entire database from the Python data structure rather than making comparisons and updating?  Is it always faster to update the file as we go?
+    - access file contents directly for command-line access
+- assumes only a single action will be taken
+- reading from/writing to the files directly saves time
+
+
+Basic Database Design Elements:
+-------------------------------
+- Table object
+    - Table.records: dict{primary_key: fields}
+- primary_key is a set of unique identifiers for the dict, used for identifying each record
+- fields: dict{category_key: value}
+    - category_key matches with a table-level category; like the columns in a table; each record must have each table-level category, although the value associated may be None
+    - value is the data associated with the category and record in question
+    - Table Methods:
+- Keep it general, do not include functionality that is unique to Asset Management
