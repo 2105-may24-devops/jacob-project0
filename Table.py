@@ -1,5 +1,6 @@
 from typing import OrderedDict
 import KeySet
+import os
 
 class Table:
     '''
@@ -35,6 +36,12 @@ class Table:
         # plus an extra blank line at the end
         return f'\n{heading}\n{"=" * len(self.__categories)*23}{body}\n'
     # END __str__()
+
+    def output_to_file(self, file_path: str = os.path.dirname(os.path.realpath(__file__)), file_name: str = 'output') -> None:
+
+        with open(f'{file_path}\\{file_name}.txt', 'w') as output_file:
+            output_file.writelines(self.__str__())
+            pass
 
     @property
     def categories(self):
@@ -107,6 +114,7 @@ if __name__ == '__main__':
     table_2_record: tuple = (1,2,3)
     table_example_2.add_records(table_2_record)
     print(table_example_2)
+    table_example.output_to_file()
     '''
     #Some stuff the verify how any() and all() work
     positive_integers_less_than_10 = set()

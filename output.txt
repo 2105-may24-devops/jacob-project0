@@ -1,0 +1,6 @@
+
+Last Name            	First Name           	Major                	Date of Hire         	Salary               	
+===================================================================================================================
+Doe                 	John                	Computer Science    	2021-01-12          	$    45,000         	
+Lee                 	Bruce               	Physical Education  	1980-10-15          	$ 2,800,000         	
+Musk                	Elon                	-No Degree-         	2020-12-25          	$    20,000         	
