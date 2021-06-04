@@ -103,6 +103,11 @@ if __name__ == '__main__':
     table_example.add_records(record_example_3)
     print(table_example)
 
+    with open ('table_example.txt', 'w') as table_file:
+        table_file.write(''.join(record_example_1))
+        table_file.write(''.join(record_example_2))
+        table_file.write(''.join(record_example_3))
+
     table_example_2 = Table(categories=('Thing 1', 'Thing 2', 'Thing 3'))
     table_2_record: tuple = (1,2,3)
     table_example_2.add_records(table_2_record)
