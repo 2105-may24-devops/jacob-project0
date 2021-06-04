@@ -4,6 +4,10 @@ from datetime import date
 import sys
 import os
 
+
+testvar = 0
+
+
 class AssetManagementTable(KeyTable):
     def __init__(self, primary_key_set = KeySet(0, 99999)) -> None:
         categories = ('Asset Description', 'Location', 'Purchase Date', 'Purchase Price', 'End of Life (EOL)', '% Value at EOL')
