@@ -44,18 +44,6 @@ class Menu:
             else:
                 raise SyntaxError('ERROR: The Menu.select() method can only be run on a Menu with options')
     
-    def key_select(self):
-        while True:
-            print(self.__prompt)
-            if self.__options:
-                print(f'Options: {[(option, result) for (option, result) in self.__options.items()]}\n')
-
-                selection = self.__options.get(input('Your selection: ').lower(), None)
-                if selection: return selection
-                else: print(f'\nERROR: Your input was not recoginzed, please review the listed options and try again.\nValid selections are {tuple(self.__options.keys())}.')
-            else:
-                raise SyntaxError('ERROR: The Menu.select() method can only be run on a Menu with options')
-
     def collect_int(prompt) -> int:
         while True:
             collected = input(f'{prompt}\nEnter an integer: ')

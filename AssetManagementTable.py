@@ -38,16 +38,16 @@ class AssetManagementTable(KeyTable):
             print(f'\nFailed to append from {file_path}{file_name}.txt, no such file was found!\n')
     
     def write_table_to_txt_file(self, file_path:str, file_name:str) -> None:
-        
+        output = []
         for line, record in enumerate(self.__records.values()):
-            print f'{record}'
+            print(f'{record[line]}')
+            output.append(record)
         with open(f'{file_path}\\{file_name}', 'a') as output_file:
             output_file.writelines(output)
 
 class Money(int):
     def __str__(self) -> str:
         return f'${self.__int__():>10,}'
-import datetime
 
 class Percent(float):
     def __str__(self) -> str:
