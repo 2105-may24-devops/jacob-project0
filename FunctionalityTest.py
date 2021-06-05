@@ -5,10 +5,75 @@ from KeyTable import KeyTable
 import os
 import pickle
 
+import sys
 
 active_tables = dict()
+arguments = sys.argv[1:]
+
+'''
+Valid arguments:
+<> show <path> <name>
+    loads the named file from the specified path and outputs the contents to the terminal
+<> write <path1> <name1> <path2> <name2>
+<> copy <path1> <name1> <path2> <name2>
+    creates a copy of the first file with the name/path in the second file
+<> append <path1> <name1> <path2> <name2> ...
+    append the second file onto the first
+'''
+
+class ParseError(Exception):
+    def __init__(self, *args: object) -> None:
+        super().__init__('''
+ERROR: Invalid arguemnts were proveded.  Proper syntax is:
+    command path_1 name_1 path_2 name_2 ...
+
+Valid commands are:
+    show <path> <name>
+        output a stylized representation of the table to the terminal
+    write <path1> <name1> <path2> <name2>
+        output a stylized representation of the table in the first file into the second file
+    copy <path1> <name1> <path2> <name2>
+        creates a copy of the first file with the name/path in the second file
+    append <path1> <name1> <path2> <name2> ...
+        append all subsequent files onto the first file
+        ''')
+
+def parse_arguments():
+    if arguments == 3:
+        command = arguments[0]
+        main_path = arguments[1]
+        main_name = arguments[2]
+    elif arguments > 4: 
+        remaining_paths = arguments[3::2]
+        remaining_names = arguments[4::2]
+    else: 
+        raise ParseError()
+
+    if (command == 'show' 
+     or command == 'write'
+     or command == 'copy'
+     or command == 'append'):
+        main_table = AssetManagementTable()
+        main_table.append_records_from_txt_file(arguments[1], arguments[2])
+
+        if command == 'show': 
+            print(main_table)
+        elif command == 'write': 
+            main_table.output_to_file(main_path, main_name)
+        elif command == 'copy':
+            main_table.write_table_to_txt_file(remaining_paths[0], remaining_names[0])
+        elif command == 'append':
+            for path, name in remaining_names, remaining_paths:
+                main_table.append_records_from_txt_file(path, name)
+        else:
+            raise ParseError()
+    else:
+        raise ParseError()
+
 
 def main():
+
+    if arguments: return parse_arguments()
     
     main_menu = Menu(
         '''
@@ -40,6 +105,7 @@ Main Menu
             9: exit_program
         })
     while True: main_menu.select()
+    
 
 def clear():
     os.system('cls' if os.name == 'nt' else 'clear')
