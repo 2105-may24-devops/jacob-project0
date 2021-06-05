@@ -86,9 +86,7 @@ class Table:
                 raise SyntaxError('ERROR: The record you attempted to add does not contain the same categories as the table.')
     
     def subtable(self, *columns):
-        for column in columns:
-            pass
-        pass
+        NotImplemented
 
 #######################################################
 #Testing code:

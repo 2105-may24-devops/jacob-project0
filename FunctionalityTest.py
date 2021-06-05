@@ -1,3 +1,4 @@
+from AssetManagementTable import AssetManagementTable
 from Menu import Menu
 from KeySet import KeySet
 from KeyTable import KeyTable
@@ -17,10 +18,10 @@ Basic Asset Management System Functioinality Test
 Main Menu
 ---------
 1) Create a new Table from the Terminal
-2) **Load a Table from a file
+2)   Load a Table from a file
 3)   Add a record
 4)   Display a Table
-5) **Save a Table to a file
+5)   Save a Table to a file
 6) **Update a record
 7) **Retrieve a record by its primary key
 8) **Generate a report
@@ -30,7 +31,7 @@ Main Menu
         ''', 
         {
             1: create_table,
-            2: not_implemented_yet,
+            2: load_file,
             3: add_record,
             4: display_table,
             5: not_implemented_yet,
@@ -68,9 +69,14 @@ def create_table():
 
     active_tables[name] = KeyTable(categories, KeySet(min_key,max_key))
 
-# 2) **Load a Table from a file
+# 2)   Load a Table from a file
 def load_file():
-    not_implemented_yet()
+    file_path_to_load = input('\nEnter the path to the input file: ')
+    file_to_load = input('\nEnter the name of the input file (no extension): ')
+    
+    new_table : AssetManagementTable = AssetManagementTable()
+    new_table.append_records_from_txt_file(file_path_to_load, file_to_load)
+    active_tables[file_to_load] = new_table
     
 # 3)   Add a record
 def add_record():
@@ -94,9 +100,12 @@ def display_table():
     else:
         print('\nThere are no active tables available to display.  Please create a new table.\nReturning to Main Menu...\n')
 
-# 5) **Save a Table to a file
+# 5)   Save a Table to a file
 def save_table():
-    not_implemented_yet()
+    table_to_output = select_table()
+    output_file_path = input('Enter the file path for the output file: ')
+    output_file_name = input('Enter the file name for the output file: ')
+    table_to_output.output_to_file(output_file_path, output_file_name)
 
 # 6) **Update a record
 def update_record():
