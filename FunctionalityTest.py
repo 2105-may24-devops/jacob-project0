@@ -1,13 +1,83 @@
+from AssetManagementTable import AssetManagementTable
 from Menu import Menu
 from KeySet import KeySet
 from KeyTable import KeyTable
 import os
 import pickle
 
+import sys
 
 active_tables = dict()
+arguments = sys.argv[1:]
+
+class ParseError(Exception):
+    def __init__(self, *args: object) -> None:
+        super().__init__('''
+ERROR: Invalid arguemnts were proveded.  Proper syntax is:
+    command path_1 name_1 path_2 name_2 ...
+
+Running the program without arguments will instead begin a menu-driven interface.
+
+Valid commands are:
+    show <path> <name>
+        output a stylized representation of the table to the terminal
+    write <path1> <name1> <path2> <name2>
+        output a stylized representation of the table in the first file into the second file
+    copy <path1> <name1> <path2> <name2> ...
+        creates a copy of the first file with the name/path in the second file
+    append <path1> <name1> <path2> <name2> ...
+        append all subsequent files onto the first file
+        ''')
+
+def parse_arguments():
+    if len(arguments) >= 3:
+        command = arguments[0]
+        main_path = arguments[1]
+        main_name = arguments[2]
+    else: 
+        raise ParseError()
+    if len(arguments) > 4: 
+        remaining_paths = arguments[3::2]
+        remaining_names = arguments[4::2]
+    else: 
+        raise ParseError()
+
+    if (command == 'show' 
+     or command == 'write'
+     or command == 'copy'
+     or command == 'append'):
+        print(f'Loading {main_path}\\{main_name}.txt ...')
+        main_table = AssetManagementTable()
+        main_table.append_records_from_txt_file(main_path, main_name)
+        print('AssetManagementTable laoded successfully!')
+
+        if command == 'show':
+            print(f'Preparing graphical represneation of {main_path}\\{main_name}.txt ...')
+            print(main_table)
+        elif command == 'write':
+            print(f'Preparing graphical represneation of {main_path}\\{main_name}.txt ...')
+            print(f'Outputting to {remaining_paths[0]}\\{remaining_names[0]}.txt ...', end='')
+            main_table.output_to_file(remaining_paths[0], remaining_names[0])
+            print('File written successfully!')
+        elif command == 'copy':
+            for path, name in remaining_paths, remaining_names:
+                print(f'Copying to {path}\\{name}.txt ...', end='')
+                main_table.write_table_to_txt_file(path, name)
+                print('Copy complete!')
+        elif command == 'append':
+            for path, name in remaining_names, remaining_paths:
+                print(f'Appending {path}\\{name}.txt ...', end='')
+                main_table.append_records_from_txt_file(path, name)
+                print('Appended successfully!')
+        else:
+            raise ParseError()
+    else:
+        raise ParseError()
+
 
 def main():
+
+    if arguments: return parse_arguments()
     
     main_menu = Menu(
         '''
@@ -17,10 +87,10 @@ Basic Asset Management System Functioinality Test
 Main Menu
 ---------
 1) Create a new Table from the Terminal
-2) **Load a Table from a file
+2)   Load a Table from a file
 3)   Add a record
 4)   Display a Table
-5) **Save a Table to a file
+5)   Save a Table to a file
 6) **Update a record
 7) **Retrieve a record by its primary key
 8) **Generate a report
@@ -30,7 +100,7 @@ Main Menu
         ''', 
         {
             1: create_table,
-            2: not_implemented_yet,
+            2: load_file,
             3: add_record,
             4: display_table,
             5: not_implemented_yet,
@@ -39,6 +109,7 @@ Main Menu
             9: exit_program
         })
     while True: main_menu.select()
+    
 
 def clear():
     os.system('cls' if os.name == 'nt' else 'clear')
@@ -68,9 +139,14 @@ def create_table():
 
     active_tables[name] = KeyTable(categories, KeySet(min_key,max_key))
 
-# 2) **Load a Table from a file
+# 2)   Load a Table from a file
 def load_file():
-    not_implemented_yet()
+    file_path_to_load = input('\nEnter the path to the input file: ')
+    file_to_load = input('\nEnter the name of the input file (no extension): ')
+    
+    new_table : AssetManagementTable = AssetManagementTable()
+    new_table.append_records_from_txt_file(file_path_to_load, file_to_load)
+    active_tables[file_to_load] = new_table
     
 # 3)   Add a record
 def add_record():
@@ -94,9 +170,12 @@ def display_table():
     else:
         print('\nThere are no active tables available to display.  Please create a new table.\nReturning to Main Menu...\n')
 
-# 5) **Save a Table to a file
+# 5)   Save a Table to a file
 def save_table():
-    not_implemented_yet()
+    table_to_output = select_table()
+    output_file_path = input('Enter the file path for the output file: ')
+    output_file_name = input('Enter the file name for the output file: ')
+    table_to_output.output_to_file(output_file_path, output_file_name)
 
 # 6) **Update a record
 def update_record():

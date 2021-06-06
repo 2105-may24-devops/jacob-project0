@@ -13,7 +13,7 @@ class AssetManagementTable(KeyTable):
         categories = ('Asset Description', 'Location', 'Purchase Date', 'Purchase Price', 'End of Life (EOL)', '% Value at EOL')
         super().__init__(categories, primary_key_set=primary_key_set)
     
-    def append_records_from_txt_file(self, file_path:str, file_name:str) -> None:
+    def append_records_from_txt_file(self, file_path: str = os.path.realpath('.'), file_name: str = "assets") -> None:
         try:
             with open(f'{file_path}\\{file_name}.txt') as input_file:
                 raw_input = input_file.readlines()
@@ -72,6 +72,6 @@ if __name__ == '__main__':
     print(my_assets)
 
     print('\nAdding multiple records by appending from a .txt file:')
-    my_assets.append_records_from_txt_file(os.path.realpath('.'), 'assets')
+    my_assets.append_records_from_txt_file()
     print(my_assets)
     
