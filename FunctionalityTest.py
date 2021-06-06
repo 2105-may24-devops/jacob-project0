@@ -10,40 +10,33 @@ import sys
 active_tables = dict()
 arguments = sys.argv[1:]
 
-'''
-Valid arguments:
-<> show <path> <name>
-    loads the named file from the specified path and outputs the contents to the terminal
-<> write <path1> <name1> <path2> <name2>
-<> copy <path1> <name1> <path2> <name2>
-    creates a copy of the first file with the name/path in the second file
-<> append <path1> <name1> <path2> <name2> ...
-    append the second file onto the first
-'''
-
 class ParseError(Exception):
     def __init__(self, *args: object) -> None:
         super().__init__('''
 ERROR: Invalid arguemnts were proveded.  Proper syntax is:
     command path_1 name_1 path_2 name_2 ...
 
+Running the program without arguments will instead begin a menu-driven interface.
+
 Valid commands are:
     show <path> <name>
         output a stylized representation of the table to the terminal
     write <path1> <name1> <path2> <name2>
         output a stylized representation of the table in the first file into the second file
-    copy <path1> <name1> <path2> <name2>
+    copy <path1> <name1> <path2> <name2> ...
         creates a copy of the first file with the name/path in the second file
     append <path1> <name1> <path2> <name2> ...
         append all subsequent files onto the first file
         ''')
 
 def parse_arguments():
-    if arguments == 3:
+    if len(arguments) >= 3:
         command = arguments[0]
         main_path = arguments[1]
         main_name = arguments[2]
-    elif arguments > 4: 
+    else: 
+        raise ParseError()
+    if len(arguments) > 4: 
         remaining_paths = arguments[3::2]
         remaining_names = arguments[4::2]
     else: 
@@ -53,18 +46,29 @@ def parse_arguments():
      or command == 'write'
      or command == 'copy'
      or command == 'append'):
+        print(f'Loading {main_path}\\{main_name}.txt ...')
         main_table = AssetManagementTable()
-        main_table.append_records_from_txt_file(arguments[1], arguments[2])
+        main_table.append_records_from_txt_file(main_path, main_name)
+        print('AssetManagementTable laoded successfully!')
 
-        if command == 'show': 
+        if command == 'show':
+            print(f'Preparing graphical represneation of {main_path}\\{main_name}.txt ...')
             print(main_table)
-        elif command == 'write': 
-            main_table.output_to_file(main_path, main_name)
+        elif command == 'write':
+            print(f'Preparing graphical represneation of {main_path}\\{main_name}.txt ...')
+            print(f'Outputting to {remaining_paths[0]}\\{remaining_names[0]}.txt ...', end='')
+            main_table.output_to_file(remaining_paths[0], remaining_names[0])
+            print('File written successfully!')
         elif command == 'copy':
-            main_table.write_table_to_txt_file(remaining_paths[0], remaining_names[0])
+            for path, name in remaining_paths, remaining_names:
+                print(f'Copying to {path}\\{name}.txt ...', end='')
+                main_table.write_table_to_txt_file(path, name)
+                print('Copy complete!')
         elif command == 'append':
             for path, name in remaining_names, remaining_paths:
+                print(f'Appending {path}\\{name}.txt ...', end='')
                 main_table.append_records_from_txt_file(path, name)
+                print('Appended successfully!')
         else:
             raise ParseError()
     else:
