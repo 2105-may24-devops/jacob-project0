@@ -1,2 +1,4 @@
 *.py[cod]
 *.exe
+venv/
+__pycache__/
