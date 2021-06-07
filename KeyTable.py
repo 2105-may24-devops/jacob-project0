@@ -1,6 +1,6 @@
 from KeySet import KeySet, Key
 from Table import Table
-from typing import OrderedDict
+import typing
 
 class KeyTable(Table):
     def __init__(self, categories: set, primary_key_set: KeySet = KeySet(0,99999)) -> None:
@@ -8,7 +8,7 @@ class KeyTable(Table):
         self.__primary_key_set = primary_key_set
         self.__categories_set = set(categories)
         self.__categories = tuple(categories)
-        self.__records = OrderedDict()
+        self.__records = typing.OrderedDict()
         super(KeyTable, self).__init__(categories)
     # END __init__()
 
@@ -36,7 +36,7 @@ class KeyTable(Table):
                     fields_to_add[self.__categories[column-1]] = data
                 except IndexError:
                     print('IndexError(Handled): Found more fields than table categories, extra fields were truncated.')
-        record_to_add: OrderedDict = {primary_key_to_add: fields_to_add}
+        record_to_add: typing.OrderedDict = {primary_key_to_add: fields_to_add}
         self.__records[primary_key_to_add._key] = fields_to_add
 
     def add_records(self, records_to_add):
@@ -46,7 +46,11 @@ class KeyTable(Table):
             else:
                 self.__add_record(records_to_add)
                 return
-
+    def remove_by_key(self, key: Key):
+        try:
+            del self.records[key]
+        except KeyError():
+            print (f'{key} was not found as a primary key in this table.\nNo record was removed.')
     def __str__(self):
         '''
         I must not understand something important about inheritance here, because the code below

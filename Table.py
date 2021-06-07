@@ -1,4 +1,4 @@
-from typing import OrderedDict
+import typing
 import KeySet
 import os
 
@@ -78,7 +78,7 @@ class Table:
        
         for record_to_add in records_to_add:
             if len(record_to_add) == len(self.__categories):
-                fields_to_add: OrderedDict = dict()
+                fields_to_add: typing.OrderedDict = dict()
                 for column, heading in enumerate(self.categories):
                         fields_to_add[heading] = record_to_add[column]
                 self.__records += tuple([fields_to_add])
