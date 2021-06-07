@@ -1,7 +1,8 @@
-- name: Ensure all hosts have the latest program version from the Git Repository
+- name: Ensure the git repository of the program is removed from all hosts
   hosts: all
   remote_user: root
   tasks:
-  ansible.builtin.file:
-    path: ~/jacob-project0
-    state: absent
+    - name: Remove project folder from project
+      ansible.builtin.file:
+        path: ~/jacob-project0
+        state: absent
