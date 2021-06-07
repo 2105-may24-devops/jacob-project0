@@ -2,7 +2,7 @@
 
 source ./venv/bin/activate
 
-python3 FunctionTest.py
+python3 FunctionalityTest.py
 
 deactivate
 
