@@ -1,0 +1,10 @@
+- name: Ensure all hosts have the latest program version from the Git Repository
+  hosts: all
+  remote_user: root
+  tasks:
+    - name: Copy the master branch
+      ansible.builtin.git:
+        repo: 'https://github.com/2105-may24-devops/jacob-project0.git'
+        dest: ~/jacob-project0/
+        single_branch: yes
+        version: master

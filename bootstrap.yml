@@ -1,0 +1,23 @@
+- name: Ensure that the hosts have Python installed
+  hosts: all
+  remote_user: root
+  # fact gathering uses Python, so we have to verify that Python is installed
+  # before we can gather facts.
+  gather_facts: false
+  tasks: 
+    - name: Check for Python
+      # check for the existance of python3 on the host
+      raw: test -e /user/bin/python
+      changed_when: false
+      failed_when: false
+      # store (register) the result of the test to flag for installation
+      register: check_python
+
+    - name: Install Python
+      raw: apt -y update && apt install -y python
+      when: check_python.rc !=0
+
+
+
+
+

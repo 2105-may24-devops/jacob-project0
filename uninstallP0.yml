@@ -1,0 +1,7 @@
+- name: Ensure all hosts have the latest program version from the Git Repository
+  hosts: all
+  remote_user: root
+  tasks:
+  ansible.builtin.file:
+    path: ~/jacob-project0
+    state: absent
