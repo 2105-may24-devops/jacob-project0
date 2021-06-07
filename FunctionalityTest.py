@@ -36,6 +36,7 @@ def parse_arguments():
         main_name = arguments[2]
     else: 
         raise ParseError()
+        
     if len(arguments) > 4: 
         remaining_paths = arguments[3::2]
         remaining_names = arguments[4::2]
