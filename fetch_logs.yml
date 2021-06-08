@@ -5,6 +5,6 @@
     - name: Fetch log files
       shell: cat /home/jacob/jacob-project0/log.txt
       register: log_contents
-    - name: Output log log_contents
+    - name: Output log contents
       debug:
         var: log_contents
