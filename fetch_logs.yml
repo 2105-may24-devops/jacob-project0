@@ -1,0 +1,10 @@
+- name: Fetch log files from hosts
+  hosts: all
+  tasks:
+    # write output of existing log file to variable
+    - name: Fetch log files
+      shell: cat /home/jacob/jacob-project0/log.txt
+      register: log_contents
+    - name: Output log log_contents
+      debug:
+        var: log_contents
