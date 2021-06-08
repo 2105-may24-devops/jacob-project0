@@ -3,9 +3,8 @@ from Menu import Menu
 from KeySet import KeySet
 from KeyTable import KeyTable
 import os
-import pickle
-import itertools
 from NumberFormat import Money, Percent
+import datetime
 import sys
 
 active_tables = dict()
@@ -30,52 +29,70 @@ Valid commands are:
         append all subsequent files onto the first file
         ''')
 
+def write_log(log_string: str):
+    with open('log.txt', 'a') as log:
+        log.writelines(log_string)
+
+
 def parse_arguments():
+    log_string = f'{datetime.now()} : {sys.argv}\n\t'
+
     if len(arguments) >= 3:
         command = arguments[0]
         main_path = arguments[1]
         main_name = arguments[2]
     else: 
+        log_string += "Parse Error... Terminated."
+        write_log(log_string)
         raise ParseError()
         
     if len(arguments) > 4: 
         remaining_paths = arguments[3::2]
         remaining_names = arguments[4::2]
     else: 
+        log_string += "Parse Error... Terminated."
+        write_log(log_string)
         raise ParseError()
 
     if (command == 'show' 
      or command == 'write'
      or command == 'copy'
      or command == 'append'):
-        print(f'Loading {main_path}\\{main_name}.txt ...')
+        log_string += f'Loading {main_path}\\{main_name}.txt ... '
         main_table = AssetManagementTable()
         main_table.append_records_from_txt_file(main_path, main_name)
-        print('AssetManagementTable laoded successfully!')
+        log_string +='AssetManagementTable laoded successfully!\n'
 
         if command == 'show':
-            print(f'Preparing graphical represneation of {main_path}\\{main_name}.txt ...')
+            log_string += f'\tPreparing graphical represneation of {main_path}\\{main_name}.txt ... '
             print(main_table)
+            log_string += f'Terminal output complete.\n'
         elif command == 'write':
-            print(f'Preparing graphical represneation of {main_path}\\{main_name}.txt ...')
-            print(f'Outputting to {remaining_paths[0]}\\{remaining_names[0]}.txt ...', end='')
+            log_string += f'\tPreparing graphical represneation of {main_path}\\{main_name}.txt ... \n'
+            log_string += f'\t\tOutputting to {remaining_paths[0]}\\{remaining_names[0]}.txt ... '
             main_table.output_to_file(remaining_paths[0], remaining_names[0])
-            print('File written successfully!')
+            log_string += 'File written successfully!\n'
         elif command == 'copy':
             for path, name in zip(remaining_paths, remaining_names):
-                print(f'Copying to {path}\\{name}.txt ...', end='')
+                log_string += f'\tCopying to {path}\\{name}.txt ... '
                 main_table.write_table_to_txt_file(path, name)
-                print('Copy complete!')
+                log_string += 'Copy complete!\n'
         elif command == 'append':
             for path, name in zip(remaining_paths, remaining_names):
-                print(f'Appending {path}\\{name}.txt ...', end='')
+                log_string += f'\tAppending {path}\\{name}.txt ... '
                 main_table.append_records_from_txt_file(path, name)
-                print('Appended successfully!')
+                log_string += 'Appended successfully!\n'
             main_table.write_table_to_txt_file(main_path, main_name)
         else:
+            log_string += "Parse Error... Terminated."
+            write_log(log_string)
             raise ParseError()
     else:
+        log_string += "Parse Error... Terminated."
+        write_log(log_string)
         raise ParseError()
+    
+    write_log(log_string)
 
 
 def main():
