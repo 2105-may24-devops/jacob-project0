@@ -1,7 +1,0 @@
-
-Key  	Asset Description    	Location             	Purchase Date        	Purchase Price       	End of Life (EOL)    	% Value at EOL       	
-==========================================================================================================================================
-00000	Laptop-10           	Recruiting          	2018-04-12          	$     4,000         	2022-04-12          	10.00%              	
-00001	Laptop-20           	Recruiting          	2018-04-12          	$     4,000         	2022-04-12          	10.00%              	
-00002	Laptop-30           	Recruiting          	2018-04-12          	$     4,000         	2022-04-12          	10.00%              	
-00003	Laptop-40           	Recruiting          	2018-04-12          	$     4,000         	2022-04-12          	10.00%              	
