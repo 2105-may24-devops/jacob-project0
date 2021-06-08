@@ -3,6 +3,8 @@ from KeySet import Key, KeySet
 from datetime import date
 import sys
 import os
+import linux_interaction
+from NumberFormat import Money, Percent
 
 class AssetManagementTable(KeyTable):
     
@@ -10,13 +12,13 @@ class AssetManagementTable(KeyTable):
         categories = ('Asset Description', 'Location', 'Purchase Date', 'Purchase Price', 'End of Life (EOL)', '% Value at EOL')
         super().__init__(categories, primary_key_set=primary_key_set)
     
-    def append_records_from_txt_file(self, file_path: str = os.path.realpath('.'), file_name: str = "assets") -> None:
+    def append_records_from_txt_file(self, file_path: str = os.path.realpath('.'), file_name: str = "test_input") -> None:
         SUCCESS = 1
         FAILURE = None
-
-        if os.name == 'nt':
-            file_to_open = f'{file_path}\\{file_name}.txt' 
-        else:
+        
+        
+        file_to_open = f'{file_path}\\{file_name}.txt' 
+        if os.name != 'nt':
             file_to_open = linux_interaction.win_path_to_linux_path(file_to_open)
 
         try:
@@ -31,7 +33,7 @@ class AssetManagementTable(KeyTable):
                     purchase_month = raw_purchase_date[1]
                     purchase_day = raw_purchase_date[2]
                     purchase_date = date(purchase_year, purchase_month, purchase_day)
-                    purchase_price = Money(int(fields[3]))
+                    purchase_price = Money(float(fields[3]))
                     raw_eol = [int(number) for number in fields[4].split('-')]
                     eol_year = raw_eol[0]
                     eol_month = raw_eol[1]
@@ -43,28 +45,6 @@ class AssetManagementTable(KeyTable):
         except FileNotFoundError:
             print(f'\nFailed to append from {file_to_open}, no such file was found!\n')
             return FAILURE
-    
-    def write_table_to_txt_file(self, file_path:str, file_name:str) -> None:
-        output = []
-        for line, record in enumerate(self.__records.values()):
-            print(f'{record[line]}')
-            output.append(record)
-        
-        if os.name == 'nt':
-            file_to_open = f'{file_path}\\{file_name}.txt' 
-        else:
-            file_to_open = linux_interaction.win_path_to_linux_path(file_to_open)
-        
-        with open(file_to_open, 'a') as output_file:
-            output_file.writelines(output)
-
-class Money(float):
-    def __str__(self) -> str:
-        return f'${self.__float__():>13,.2f}'
-
-class Percent(float):
-    def __str__(self) -> str:
-        return f'{self.__float__():.0%}'
 
 
 #######################################################
@@ -87,4 +67,6 @@ if __name__ == '__main__':
     print('\nAdding multiple records by appending from a .txt file:')
     my_assets.append_records_from_txt_file()
     print(my_assets)
+
+    my_assets.write_table_to_txt_file('.', 'copy_test')
     

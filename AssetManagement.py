@@ -4,7 +4,8 @@ from KeySet import KeySet
 from KeyTable import KeyTable
 import os
 import pickle
-
+import itertools
+from NumberFormat import Money, Percent
 import sys
 
 active_tables = dict()
@@ -61,7 +62,9 @@ def parse_arguments():
             main_table.output_to_file(remaining_paths[0], remaining_names[0])
             print('File written successfully!')
         elif command == 'copy':
-            for path, name in remaining_paths, remaining_names:
+            print('Table to copy: ')
+            print(main_table)
+            for path, name in zip(remaining_paths, remaining_names):
                 print(f'Copying to {path}\\{name}.txt ...', end='')
                 main_table.write_table_to_txt_file(path, name)
                 print('Copy complete!')

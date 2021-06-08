@@ -1,1 +1,3 @@
 # This project contains no non-standard modules
+# HOWEVER the project requires python 3.9, which may have to be installed manually on ubuntu
+# Ansible automation is used to ensure the correct version of Python is installed

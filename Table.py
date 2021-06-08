@@ -2,7 +2,7 @@ import typing
 import KeySet
 import os
 import linux_interaction
-
+from NumberFormat import Money, Percent
 class Table:
     '''
     A table is a list of records.  A Table has a set of categories that are valid for
@@ -40,14 +40,14 @@ class Table:
 
     def output_to_file(self, file_path: str = os.path.dirname(os.path.realpath(__file__)), file_name: str = 'output') -> None:
         
-        if os.name == 'nt':
-            file_to_open = f'{file_path}\\{file_name}.txt' 
-        else:
+        
+        file_to_open = f'{file_path}\\{file_name}.txt' 
+        if os.name != 'nt':
             file_to_open = linux_interaction.win_path_to_linux_path(file_to_open)
 
         with open(file_to_open, 'w') as output_file:
             output_file.writelines(self.__str__())
-            pass
+
 
     @property
     def categories(self):
@@ -98,6 +98,8 @@ class Table:
 #Testing code:
 #######################################################
 if __name__ == '__main__':
+    pass
+    '''
     import datetime
     
     class Money(int):
@@ -113,7 +115,7 @@ if __name__ == '__main__':
     table_example.add_records(record_example_2)
     table_example.add_records(record_example_3)
     print(table_example)
-'''
+
     with open ('assets.txt', 'w') as table_file:
         table_file.write(''.join(record_example_1))
         table_file.write(''.join(record_example_2))

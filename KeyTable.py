@@ -1,7 +1,9 @@
 from KeySet import KeySet, Key
 from Table import Table
 import typing
-
+import os
+import linux_interaction
+from NumberFormat import Money, Percent
 class KeyTable(Table):
     def __init__(self, categories: set, primary_key_set: KeySet = KeySet(0,99999)) -> None:
         
@@ -46,11 +48,13 @@ class KeyTable(Table):
             else:
                 self.__add_record(records_to_add)
                 return
+
     def remove_by_key(self, key: Key):
         try:
             del self.records[key]
         except KeyError():
             print (f'{key} was not found as a primary key in this table.\nNo record was removed.')
+
     def __str__(self):
         '''
         I must not understand something important about inheritance here, because the code below
@@ -74,6 +78,25 @@ class KeyTable(Table):
         return f'\n{heading}\n{"=" * len(self.__categories)*23}{body}\n'
     # END __str__()
 
+    def write_table_to_txt_file(self, file_path:str, file_name:str) -> None:
+        
+        
+        print(self)
+        body = ''
+        for record in self.__records.values():
+            body += ', '.join(str(value if not (isinstance(value, Money) or isinstance(value, Percent)) else f'{float(value):.2f}') for value in [record.values()][0])
+            body +='\n'
+            print(body)
+        
+        
+        file_to_open = f'{file_path}\\{file_name}.txt' 
+        if os.name != 'nt':
+            file_to_open = linux_interaction.win_path_to_linux_path(file_to_open)
+        
+        print(f'Opening {file_to_open} for writing...')
+        with open(file_to_open, 'w') as output_file:
+            output_file.writelines(body)
+
     @property
     def primary_key_set(self):
         return self.__primary_key_set
@@ -87,12 +110,6 @@ class KeyTable(Table):
 #######################################################
 if __name__ == '__main__':
     from datetime import date
-
-    class Money(int):
-        def __str__(self) -> str:
-            return f'${self.__int__():>10,}'
-    import datetime
-
 
     my_table = KeyTable(('Item Description', 'Serial #',  'Location',          'Purchase Date',   'Purchase Price', 'End of Life'))
     my_table.add_records(('HP Laptop',       12597856879, 'Recruiting Office', date(2020, 4, 23), Money(4_000),     date(2021,6,1)))
