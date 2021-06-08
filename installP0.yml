@@ -1,6 +1,5 @@
-- name: Ensure all hosts have the latest program version from the Git Repository
+- name: Ensure all active hosts have the latest program version from the Git Repository
   hosts: all
-  remote_user: root
   gather_facts: false
   tasks:
     - name: Clone/pull the project master branch
@@ -13,8 +12,13 @@
       ansible.builtin.file:
         path: ~/jacob-project0/venv
         state: directory
-    - name: Create venv environment
-      ansible.builtin.shell: 'python3 -m venv ~/jacob-project0/venv/'
+    - name: Create virtual environment using pip
+      pip:
+        requirements: ~/jacob-project0/requirements.txt
+        virtualenv: ~/jacob-project0/venv/
+        virtualenv_command: '-m venv'
+        virtualenv_python: python3.9
+        state: latest
 
 
 

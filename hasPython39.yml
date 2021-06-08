@@ -1,0 +1,23 @@
+- name: Ensure that the hosts have Python installed
+  hosts: all
+  remote_user: root
+  become: yes
+  tasks: 
+    - name: Install Python3.9 prerequisites
+      ansible.builtin.apt:
+        update_cache: yes
+        name: software-properties-common
+        state: latest
+    - name: Add Python3.9 to apt repository
+      ansible.builtin.apt_repository:
+        repo: ppa:deadsnakes/ppa
+        state: present
+    - name: Install Python3.9
+      ansible.builtin.apt:
+        update_cache: yes
+        name: python3.9
+        state: present
+    - name: Install the latest version of python3-venv
+      ansible.builtin.package:
+        name: python3-venv
+        state: latest
