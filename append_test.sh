@@ -21,7 +21,7 @@ else
     RESULT=$ERROR
 fi
 
-#echo 'Removing the test files...'
-#rm append_test.txt
-#echo 'Removed.'
+echo 'Removing the test files...'
+rm append_test.txt
+echo 'Removed.'
 exit $RESULT
