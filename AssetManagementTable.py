@@ -4,18 +4,23 @@ from datetime import date
 import sys
 import os
 
-
-testvar = 0
-
-
 class AssetManagementTable(KeyTable):
+    
     def __init__(self, primary_key_set = KeySet(0, 99999)) -> None:
         categories = ('Asset Description', 'Location', 'Purchase Date', 'Purchase Price', 'End of Life (EOL)', '% Value at EOL')
         super().__init__(categories, primary_key_set=primary_key_set)
     
     def append_records_from_txt_file(self, file_path: str = os.path.realpath('.'), file_name: str = "assets") -> None:
+        SUCCESS = 1
+        FAILURE = None
+
+        if os.name == 'nt':
+            file_to_open = f'{file_path}\\{file_name}.txt' 
+        else:
+            file_to_open = linux_interaction.win_path_to_linux_path(file_to_open)
+
         try:
-            with open(f'{file_path}\\{file_name}.txt') as input_file:
+            with open(file_to_open, 'r') as input_file:
                 raw_input = input_file.readlines()
                 for raw_line in raw_input:
                     fields = raw_line.split(', ')
@@ -34,24 +39,32 @@ class AssetManagementTable(KeyTable):
                     eol_date = date(eol_year, eol_month, eol_day)
                     value_at_eol = Percent(float(fields[5]))
                     self.add_records((description, location, purchase_date, purchase_price, eol_date, value_at_eol))
+                return SUCCESS
         except FileNotFoundError:
-            print(f'\nFailed to append from {file_path}{file_name}.txt, no such file was found!\n')
+            print(f'\nFailed to append from {file_to_open}, no such file was found!\n')
+            return FAILURE
     
     def write_table_to_txt_file(self, file_path:str, file_name:str) -> None:
         output = []
         for line, record in enumerate(self.__records.values()):
             print(f'{record[line]}')
             output.append(record)
-        with open(f'{file_path}\\{file_name}', 'a') as output_file:
+        
+        if os.name == 'nt':
+            file_to_open = f'{file_path}\\{file_name}.txt' 
+        else:
+            file_to_open = linux_interaction.win_path_to_linux_path(file_to_open)
+        
+        with open(file_to_open, 'a') as output_file:
             output_file.writelines(output)
 
-class Money(int):
+class Money(float):
     def __str__(self) -> str:
-        return f'${self.__int__():>10,}'
+        return f'${self.__float__():>13,.2f}'
 
 class Percent(float):
     def __str__(self) -> str:
-        return f'{self.__float__():.2%}'
+        return f'{self.__float__():.0%}'
 
 
 #######################################################

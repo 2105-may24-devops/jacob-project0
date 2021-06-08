@@ -87,7 +87,7 @@ Basic Asset Management System Functioinality Test
 
 Main Menu
 ---------
-1) Create a new Table from the Terminal
+1)   Create a new Table from the Terminal
 2)   Load a Table from a file
 3)   Add a record
 4)   Display a Table
@@ -146,8 +146,8 @@ def load_file():
     file_to_load = input('\nEnter the name of the input file (no extension): ')
     
     new_table : AssetManagementTable = AssetManagementTable()
-    new_table.append_records_from_txt_file(file_path_to_load, file_to_load)
-    active_tables[file_to_load] = new_table
+    if new_table.append_records_from_txt_file(file_path_to_load, file_to_load):
+        active_tables[file_to_load] = new_table
     
 # 3)   Add a record
 def add_record():

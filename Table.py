@@ -1,6 +1,7 @@
 import typing
 import KeySet
 import os
+import linux_interaction
 
 class Table:
     '''
@@ -38,8 +39,13 @@ class Table:
     # END __str__()
 
     def output_to_file(self, file_path: str = os.path.dirname(os.path.realpath(__file__)), file_name: str = 'output') -> None:
+        
+        if os.name == 'nt':
+            file_to_open = f'{file_path}\\{file_name}.txt' 
+        else:
+            file_to_open = linux_interaction.win_path_to_linux_path(file_to_open)
 
-        with open(f'{file_path}\\{file_name}.txt', 'w') as output_file:
+        with open(file_to_open, 'w') as output_file:
             output_file.writelines(self.__str__())
             pass
 
@@ -107,8 +113,8 @@ if __name__ == '__main__':
     table_example.add_records(record_example_2)
     table_example.add_records(record_example_3)
     print(table_example)
-
-    with open ('table_example.txt', 'w') as table_file:
+'''
+    with open ('assets.txt', 'w') as table_file:
         table_file.write(''.join(record_example_1))
         table_file.write(''.join(record_example_2))
         table_file.write(''.join(record_example_3))
@@ -118,7 +124,7 @@ if __name__ == '__main__':
     table_example_2.add_records(table_2_record)
     print(table_example_2)
     table_example.output_to_file()
-    '''
+    
     #Some stuff the verify how any() and all() work
     positive_integers_less_than_10 = set()
     positive_integers_less_than_10 = (1, 2, 3, 4, 5, 6, 7, 8, 9)

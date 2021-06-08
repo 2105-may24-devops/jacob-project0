@@ -1,6 +1,6 @@
 import os
 
-def win_path_to_bash_path(win_path: str = os.getcwd()) -> str:
+def win_path_to_linux_path(win_path: str = os.getcwd()) -> str:
     ''' Converts a complete windows path into a proper bash path
         "C:\dir1\dir2" => "/c/dir1/dir2"
 
