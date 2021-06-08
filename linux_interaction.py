@@ -30,4 +30,4 @@ def win_path_to_linux_path(win_path: str = os.getcwd()) -> str:
 
     
 if __name__ == '__main__':
-    print(win_path_to_bash_path())
+    print(win_path_to_linux_path())
