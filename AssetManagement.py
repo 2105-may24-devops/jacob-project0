@@ -4,7 +4,7 @@ from KeySet import KeySet
 from KeyTable import KeyTable
 import os
 from NumberFormat import Money, Percent
-import datetime
+from datetime import datetime
 import sys
 
 active_tables = dict()
