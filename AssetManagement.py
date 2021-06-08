@@ -69,10 +69,11 @@ def parse_arguments():
                 main_table.write_table_to_txt_file(path, name)
                 print('Copy complete!')
         elif command == 'append':
-            for path, name in remaining_names, remaining_paths:
+            for path, name in zip(remaining_paths, remaining_names):
                 print(f'Appending {path}\\{name}.txt ...', end='')
                 main_table.append_records_from_txt_file(path, name)
                 print('Appended successfully!')
+            main_table.write_table_to_txt_file(main_path, main_name)
         else:
             raise ParseError()
     else:
