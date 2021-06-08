@@ -19,11 +19,13 @@ def win_path_to_linux_path(win_path: str = os.getcwd()) -> str:
     dir_list = win_path.split('\\')
     
     # isolate the drive letter (leave off the ':') and add it to the bash path
-    bash_path = f'/{dir_list[0][0]}'
+    bash_path = f'/{dir_list[0][0]}' if dir_list[0][0].isalpha() else dir_list[0]
 
     # add each directory from the list to the bash path in proper bash format with '/' as deliminators
     for dir in dir_list[1:]:
         bash_path += f'/{dir}'
+
+    print(bash_path)
 
     # return the completed path in proper bash format
     return bash_path
