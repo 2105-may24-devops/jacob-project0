@@ -62,8 +62,6 @@ def parse_arguments():
             main_table.output_to_file(remaining_paths[0], remaining_names[0])
             print('File written successfully!')
         elif command == 'copy':
-            print('Table to copy: ')
-            print(main_table)
             for path, name in zip(remaining_paths, remaining_names):
                 print(f'Copying to {path}\\{name}.txt ...', end='')
                 main_table.write_table_to_txt_file(path, name)

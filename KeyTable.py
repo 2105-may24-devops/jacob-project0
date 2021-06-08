@@ -80,20 +80,16 @@ class KeyTable(Table):
 
     def write_table_to_txt_file(self, file_path:str, file_name:str) -> None:
         
-        
-        print(self)
         body = ''
         for record in self.__records.values():
             body += ', '.join(str(value if not (isinstance(value, Money) or isinstance(value, Percent)) else f'{float(value):.2f}') for value in [record.values()][0])
             body +='\n'
-            print(body)
         
         
         file_to_open = f'{file_path}\\{file_name}.txt' 
         if os.name != 'nt':
             file_to_open = linux_interaction.win_path_to_linux_path(file_to_open)
         
-        print(f'Opening {file_to_open} for writing...')
         with open(file_to_open, 'w') as output_file:
             output_file.writelines(body)
 
