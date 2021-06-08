@@ -1,0 +1,19 @@
+- name: Run Function Tests on AssetManagement.py
+  hosts: all
+  become: yes
+  tasks: 
+    - name: Test write command
+      ansible.builtin.script:
+        chdir: /home/jacob/jacob-project0/
+        cmd: ./write_test.sh
+        register: write_command
+    - name: Test copy command
+      ansible.builtin.script:
+        chdir: /home/jacob/jacob-project0/
+        cmd: ./copy_test.sh
+        register: copy_command
+    - name: Test append command
+      ansible.builtin.script:
+        chdir: /home/jacob/jacob-project0/
+        cmd: ./append_test.sh
+        register: append_command

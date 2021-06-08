@@ -1,6 +1,6 @@
 - name: Ensure the git repository of the program is removed from all hosts
   hosts: all
-  remote_user: root
+  become: yes
   tasks:
     - name: Remove project folder from project
       ansible.builtin.file:
