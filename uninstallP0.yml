@@ -5,5 +5,5 @@
   tasks:
     - name: Remove project folder from project
       ansible.builtin.file:
-        path: ~/jacob-project0
+        path: /home/jacob/jacob-project0/
         state: absent
