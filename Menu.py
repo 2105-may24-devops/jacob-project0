@@ -81,7 +81,8 @@ if __name__ == '__main__':
     def choice_2():
         print('<<<2>>>')
     
-    test_1 = lambda: choice_1()
+    #test_1 = lambda: choice_1()
+    
     prompt = 'Make a selection:'
     choices = {1: choice_1, 2: choice_2}
     Menu(prompt, choices).select()
