@@ -1,21 +1,26 @@
 - name: Ensure all active hosts have the latest program version from the Git Repository
   hosts: all
   gather_facts: false
+  become: yes
   tasks:
     - name: Clone/pull the project master branch
       ansible.builtin.git:
         repo: 'https://github.com/2105-may24-devops/jacob-project0.git'
-        dest: ~/jacob-project0/
+        dest: /home/jacob/jacob-project0/
         single_branch: yes
         version: master
     - name: Create venv directory
       ansible.builtin.file:
-        path: ~/jacob-project0/venv
+        path: /home/jacob/jacob-project0/venv
         state: directory
+    - name: Ensure pip is installed on hosts
+      ansible.builtin.package:
+        name: python-setuptools
+        state: latest
     - name: Create virtual environment using pip
-      pip:
-        requirements: ~/jacob-project0/requirements.txt
-        virtualenv: ~/jacob-project0/venv/
+      ansible.builtin.pip:
+        requirements: /home/jacob/jacob-project0/requirements.txt
+        virtualenv: /home/jacob/jacob-project0/venv/
         virtualenv_command: '-m venv'
         virtualenv_python: python3.9
         state: latest

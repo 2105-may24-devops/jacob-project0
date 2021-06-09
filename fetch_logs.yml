@@ -1,5 +1,7 @@
 - name: Fetch log files from hosts
   hosts: all
+  gather_facts: false
+  become: yes
   tasks:
     # write output of existing log file to variable
     - name: Fetch log files

@@ -1,5 +1,6 @@
 - name: Run Function Tests on AssetManagement.py
   hosts: all
+  gather_facts: false
   become: yes
   tasks: 
     - name: Test write command
