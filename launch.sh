@@ -1,8 +1,8 @@
 #!/bin/bash
 
-source ./venv/bin/activate
+source venv/bin/activate
 
-python3 FunctionalityTest.py
+python3.9 AssetManagement.py
 
 deactivate
 
