@@ -111,12 +111,11 @@ Main Menu
 3)   Add a record
 4)   Display a Table
 5)   Save a Table to a file
-6) **Update a record
-7) **Retrieve a record by its primary key
-8) **Generate a report
+6)   Update a record
+7)   Retrieve a record by its primary key
+8)   Generate a report
 9)   Exit the program
 
-** = Not implemented yet.
         ''', 
         {
             1: create_table,
