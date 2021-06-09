@@ -3,3 +3,4 @@
 - import_playbook: hasGit.yml
 - import_playbook: installp0.yml
 - import_playbook: test.yml
+- import_playbook: fetch_logs.yml
