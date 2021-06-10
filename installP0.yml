@@ -1,26 +1,12 @@
 - name: Load Docker and the project container
-  hosts: all
+  hosts: revature
   gather_facts: false
   tasks:
-    - name: Clone/pull the project master branch
-      ansible.builtin.git:
-        repo: 'https://github.com/2105-may24-devops/jacob-project0.git'
-        dest: ~/jacob-project0/
-        single_branch: yes
-        version: master
-    - name: Create virtual environment
-      ansible.builtin.file:
-        name: create directory
-        path: ~/jacob-project0/venv
-        state: directory
-      ansible.builtin.pip:
-        name: build virtual environment with required modules
-        requirements: ~/jacob-project0/requirements.txt
-        virtualenv: ~/jacob-project0/venv/
-        virtualenv_command: '-m venv'
-        virtualenv_python: python3.9
-        state: latest
-
-
-
-
+    - name: Fetch latest Docker installation script
+      ansible.builtin.get_url:
+        url: https://get.docker.com/
+        dest: ~/jacob-project0/get_docker.sh
+    - name: Install Docker if it does not exist on the host
+      ansible.builtin.command: 
+        cmd: bash get_docker.sh
+        creates: /usr/bin/docker
