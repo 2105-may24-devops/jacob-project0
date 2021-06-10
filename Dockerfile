@@ -58,6 +58,8 @@ COPY . ./
 # putting it last here helps the build use more cached portions before getting to the changes
 
 
-RUN bash write_test.sh >> setup_log.txt \
+RUN cd test \
+    && bash write_test.sh >> setup_log.txt \
     && bash copy_test.sh >> setup_log.txt\
-    && bash append_test.sh >> setup_log.txt
+    && bash append_test.sh >> setup_log.txt \
+    && cd ..
