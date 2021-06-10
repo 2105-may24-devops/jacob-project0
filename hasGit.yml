@@ -1,9 +1,0 @@
-- name: Ensure that the hosts have Git installed
-  hosts: all
-  gather_facts: false
-  become: yes
-  tasks: 
-    - name: Install the latest version of Git
-      ansible.builtin.package:
-        name: git
-        state: latest
