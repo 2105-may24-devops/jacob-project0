@@ -4,7 +4,7 @@ SUCCESS=0
 ERROR=1
 
 echo 'Testing AssetManagement.py copy command...'
-sudo python3.9 AssetManagement.py copy . test_input . copy_results
+python3.9 AssetManagement.py copy . test_input . copy_results
 
 generated="./copy_results.txt"
 correct="./test_input.txt"

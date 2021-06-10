@@ -6,7 +6,7 @@ ERROR=1
 cp test_input.txt append_test.txt
 
 echo 'Testing AssetManagement.py append command...'
-sudo python3.9 AssetManagement.py append . append_test . test_input
+python3.9 AssetManagement.py append . append_test . test_input
 
 generated="./append_test.txt"
 correct="./append_expected.txt"

@@ -1,9 +1,7 @@
 #!/bin/bash
 
-source venv/bin/activate
+# run the project from its Docker container
+docker run -it project0_container
 
-python3.9 AssetManagement.py
-
-deactivate
 
 

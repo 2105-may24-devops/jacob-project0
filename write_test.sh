@@ -4,7 +4,7 @@ SUCCESS=0
 ERROR=1
 
 echo 'Testing AssetManagement.py write command...'
-sudo python3.9 AssetManagement.py write . test_input . write_results
+python3.9 AssetManagement.py write . test_input . write_results
 
 generated="./write_results.txt"
 correct="./write_test.txt"
