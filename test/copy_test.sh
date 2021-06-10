@@ -4,10 +4,11 @@ SUCCESS=0
 ERROR=1
 
 echo 'Testing AssetManagement.py copy command...'
-python3.9 AssetManagement.py copy . test_input . copy_results
+cd ..
+python3.9 ./AssetManagement.py copy ./test test_input ./test copy_results
 
-generated="./copy_results.txt"
-correct="./test_input.txt"
+generated="./test/copy_results.txt"
+correct="./test/test_input.txt"
 
 if cmp -s "$generated" "$correct"; then
     echo "SUCCESS!"
@@ -19,7 +20,7 @@ else
     RESULT=$ERROR
 fi
 
-echo 'Removing the test file...'
-rm copy_results.txt
+echo 'Removing the generated file...'
+rm $generated
 echo 'Removed.'
 exit $RESULT

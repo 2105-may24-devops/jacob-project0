@@ -4,10 +4,11 @@ SUCCESS=0
 ERROR=1
 
 echo 'Testing AssetManagement.py write command...'
-python3.9 AssetManagement.py write . test_input . write_results
+cd ..
+python3.9 ./AssetManagement.py write ./test test_input ./test write_results
 
-generated="./write_results.txt"
-correct="./write_test.txt"
+generated="./test/write_results.txt"
+correct="./test/write_test.txt"
 
 if cmp -s "$generated" "$correct"; then
     echo "SUCCESS!"
@@ -19,7 +20,7 @@ else
     RESULT=$ERROR
 fi
 
-echo 'Removing the test file...'
-rm write_results.txt
+echo 'Removing the generated file...'
+rm $generated
 echo 'Removed.'
 exit $RESULT

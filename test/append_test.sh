@@ -6,10 +6,11 @@ ERROR=1
 cp test_input.txt append_test.txt
 
 echo 'Testing AssetManagement.py append command...'
-python3.9 AssetManagement.py append . append_test . test_input
+cd ..
+python3.9 ./AssetManagement.py append ./test append_test ./test test_input
 
-generated="./append_test.txt"
-correct="./append_expected.txt"
+generated="./test/append_test.txt"
+correct="./test/append_expected.txt"
 
 if cmp -s "$generated" "$correct"; then
     echo "SUCCESS!"
@@ -21,7 +22,7 @@ else
     RESULT=$ERROR
 fi
 
-echo 'Removing the test files...'
-rm append_test.txt
+echo 'Removing the generated files...'
+rm $generated
 echo 'Removed.'
 exit $RESULT
