@@ -5,7 +5,7 @@
   tasks:
     # write output of existing log file to variable
     - name: Fetch log files
-      shell: cat /home/jacob/jacob-project0/log.txt
+      shell: cat /home/jacob/jacob-project0/setup_log.txt
       register: log_contents
     - name: Output log contents
       debug:

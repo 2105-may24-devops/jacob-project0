@@ -1,12 +1,42 @@
 - name: Load Docker and the project container
   hosts: revature
   gather_facts: false
+  become: yes
+  become_user: root
   tasks:
     - name: Fetch latest Docker installation script
+      ansible.builtin.file:
+        path: ~/jacob-project0/
+        state: directory
+    - name: Prepare empty setup_log.txt file
+      ansible.builtin.file:
+        path: ~/jacob-project0/setup_log.txt
+        state: touch
+    - name: Download latest get_docker.sh from https://get.docker.com/
       ansible.builtin.get_url:
         url: https://get.docker.com/
         dest: ~/jacob-project0/get_docker.sh
-    - name: Install Docker if it does not exist on the host
+    - name: set environment default python version
+      ansible.builtin.command: 
+        cmd: sudo update-alternatives --install /usr/bin/python python /usr/bin/python3.9 2
+        creates: /usr/bin/docker
+    - name: Install Docker
       ansible.builtin.command: 
         cmd: bash get_docker.sh
         creates: /usr/bin/docker
+    - name: Install Docker-Ansible dependencies
+      ansible.builtin.pip:
+        name: "{{ item }}"
+        executable: pip3
+        state: latest
+      with_items:
+        - pip
+        - docker
+        - PyYAML
+        - docker-compose
+    - name: Pull project image
+      community.docker.docker_image:
+        name: jpbulloch5/revature_project0
+        source: pull
+        pull:
+          platform: amd64
