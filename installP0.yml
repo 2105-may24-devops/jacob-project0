@@ -7,16 +7,18 @@
       ansible.builtin.git:
         repo: 'https://github.com/2105-may24-devops/jacob-project0.git'
         dest: /home/jacob/jacob-project0/
-        single_branch: yes
-        version: master
+        version: azure-pipelines
+
     - name: Create venv directory
       ansible.builtin.file:
         path: /home/jacob/jacob-project0/venv
         state: directory
+
     - name: Ensure pip is installed on hosts
       ansible.builtin.package:
         name: python-setuptools
         state: latest
+
     - name: Create virtual environment using pip
       ansible.builtin.pip:
         requirements: /home/jacob/jacob-project0/requirements.txt
