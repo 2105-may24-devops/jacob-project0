@@ -46,8 +46,8 @@ steps:
 - task: Ansible@0
   inputs:
     ansibleInterface: 'agentMachine'
-    playbookPathOnAgentMachine: './deployP0.yml'
+    playbookPathOnAgentMachine: 'deployP0.yml'
     inventoriesAgentMachine: 'file'
-    inventoryFileOnAgentMachine: './inventory'
+    inventoryFileOnAgentMachine: 'inventory'
   displayName: 'Ansible--> Deploy Project 0'
 
