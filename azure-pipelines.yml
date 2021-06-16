@@ -28,9 +28,9 @@ steps:
     venv/bin/python -m pip install -r requirements.txt
   displayName: 'Install dependencies'
 
-- script: |
-    bash ./copy_test.sh && bash append_test.sh && bash write_test.sh
-  displayName: 'Run tests'
+#- script: |
+#    bash ./copy_test.sh && bash append_test.sh && bash write_test.sh
+#  displayName: 'Run tests'
 
 - task: InstallSSHKey@0
   inputs:
@@ -46,8 +46,8 @@ steps:
 - task: Ansible@0
   inputs:
     ansibleInterface: 'agentMachine'
-    playbookPathOnAgentMachine: './deployP0.yml'
+    playbookPathOnAgentMachine: 'deployP0.yml'
     inventoriesAgentMachine: 'file'
-    inventoryFileOnAgentMachine: './ansible/inventory'
+    inventoryFileOnAgentMachine: 'inventory'
   displayName: 'Ansible--> Deploy Project 0'
 
