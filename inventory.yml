@@ -1,15 +1,16 @@
 all:
-  revature:
-    hosts:
-      vm2:
-        ansible_host: 104.215.72.107
-      vm3:
-        ansible_host: 20.97.12.217
-      vm4:
-        ansible_host: 13.84.166.27
-      PresentationVM5:
-        ansible_host: 13.66.8.112
-    vars:
-      ansible_ssh_private_key_file: ~/.ssh/2105-may24-devops-ubuntu-vm-1_key.pem
-      ansible_user: jacob
+  children:
+    revature:
+      hosts:
+        vm2:
+          ansible_host: 104.215.72.107
+        vm3:
+          ansible_host: 20.97.12.217
+        vm4:
+          ansible_host: 13.84.166.27
+        PresentationVM5:
+          ansible_host: 13.66.8.112
+      vars:
+        ansible_ssh_private_key_file: ~/.ssh/2105-may24-devops-ubuntu-vm-1_key.pem
+        ansible_user: jacob
 
