@@ -55,8 +55,28 @@ steps:
 - task: Ansible@0
   inputs:
     ansibleInterface: 'agentMachine'
-    playbookPathOnAgentMachine: 'deployP0.yml'
+    playbookPathOnAgentMachine: 'hasPython39.yml'
     inventoriesAgentMachine: 'file'
     inventoryFileOnAgentMachine: 'inventory.yml'
-  displayName: 'Ansible--> Deploy Project 0'
+  displayName: 'Ansible--> Ensure Python 3.9'
 
+- task: Ansible@0
+  inputs:
+    ansibleInterface: 'agentMachine'
+    playbookPathOnAgentMachine: 'hasGit.yml'
+    inventoryFileOnAgentMachine: 'inventory.yml'
+  displayName: 'Ansible--> Ensure Git'
+
+- task: Ansible@0
+  inputs:
+    ansibleInterface: 'agentMachine'
+    playbookPathOnAgentMachine: 'installP0.yml'
+    inventoryFileOnAgentMachine: 'inventory.yml'
+  displayName: 'Ansible--> Install Project 0'
+
+- task: Ansible@0
+  inputs:
+    ansibleInterface: 'agentMachine'
+    playbookPathOnAgentMachine: 'test.yml'
+    inventoryFileOnAgentMachine: 'inventory.yml'
+  displayName: 'Ansible--> Run Tests'
