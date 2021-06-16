@@ -48,6 +48,6 @@ steps:
     ansibleInterface: 'agentMachine'
     playbookPathOnAgentMachine: './deployP0.yml'
     inventoriesAgentMachine: 'file'
-    inventoryFileOnAgentMachine: './inventory.yml'
+    inventoryFileOnAgentMachine: './inventory'
   displayName: 'Ansible--> Deploy Project 0'
 
