@@ -32,6 +32,7 @@ steps:
       13.66.8.112 ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDjFAGX6TQ7ohidiP51piTRkWdEHnZVJ59vgF9BREt1IsVYxq/jJdRN7V2Wzpr2LN6XnyVFQvth+1PBIqZph4YkKKnjhY3U6NV6v1leWh1hURmz5D/6GFvjt51Hxkhj/NcazeCM50h0ehKWqKBtP24iYhoHxmCey8v90MEYYT64EQfv2FlvCQk4wr1ozH7dYXk5GwJkYjtnHNHSFPOZ9ZK6Z9TqiAoRtLcsTyAzoqwsWStaaLYmYMK9OvJQjgTSKLB9CbIXXTmL+FVsI40Y5nYR07CI2+Eh6qCEngGXzOUOfFzo9ICwAUgsfTCv0iOuT9PwH8jgymmsLQ5rryX71k77
       13.66.8.112 ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBB8uiPgYsAfhZo9tzfam2hbv7G1TUF4hk0jzrxO/SjLO2qBpMrlDaQvQWYZI3kdNT1xgFHFKSXcyaPElszq3tqU=
     sshKeySecureFile: '2105-may24-devops-ubuntu-vm-1_key.pem'
+  displayName: 'SSH--> Install Key'
 
 # Run the playbook to deploy P0 to the VMs
 - task: Ansible@0
