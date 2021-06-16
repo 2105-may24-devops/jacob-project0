@@ -58,5 +58,5 @@ steps:
     playbookPathOnAgentMachine: 'deployP0.yml'
     inventoriesAgentMachine: 'file'
     inventoryFileOnAgentMachine: 'inventory.yml'
-  displayName: 'Ansible--> Deploy Project 0'
-
+    failOnStdErr: false
+  displayName: 'Ansible--> Ensure Python 3.9'
