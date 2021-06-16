@@ -1,29 +1,18 @@
-# Python package
-# Create and test a Python package on multiple Python versions.
-# Add steps that analyze code, save the dist with the build record, publish to a PyPI-compatible index, and more:
-# https://docs.microsoft.com/azure/devops/pipelines/languages/python
+# Use Ansible to deploy Project 0 to VMs 2-5
+# Tests are part of the Ansible Playbooks
+# The deployP0.yml playbook calls all relevant playbooks
 
+# Trigger the pipeline when the azure-pipelines branch gets a new push
 trigger:
-- main
+- azure-pipelines
 
+# We have the latest ubuntu as our base layer
 pool:
   vmImage: ubuntu-latest
 
 steps:
 
-# - task: UsePythonVersion@0
-#   inputs:
-#     versionSpec: '3.9'
-#     addToPath: true
-#     architecture: 'x64'
-
-# - script: |
-#     python -m pip install --upgrade pip
-#     python -m venv venv
-#     venv/bin/python -m pip install -r requirements.txt
-#   displayName: 'Install dependencies'
-
-
+# Add the SSH key needed to access the VMs
 - task: InstallSSHKey@0
   inputs:
     knownHostsEntry: |
@@ -44,6 +33,7 @@ steps:
       13.66.8.112 ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBB8uiPgYsAfhZo9tzfam2hbv7G1TUF4hk0jzrxO/SjLO2qBpMrlDaQvQWYZI3kdNT1xgFHFKSXcyaPElszq3tqU=
     sshKeySecureFile: '2105-may24-devops-ubuntu-vm-1_key.pem'
 
+# Run the playbook to deploy P0 to the VMs
 - task: Ansible@0
   inputs:
     ansibleInterface: 'agentMachine'
