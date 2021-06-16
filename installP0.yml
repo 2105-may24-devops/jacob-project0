@@ -1,8 +1,6 @@
 - name: Load Docker and the project container
   hosts: revature
   gather_facts: false
-  become: yes
-  become_user: root
   tasks:
     - name: Fetch latest Docker installation script
       ansible.builtin.file:
@@ -27,7 +25,6 @@
     - name: Install Docker-Ansible dependencies
       ansible.builtin.pip:
         name: "{{ item }}"
-        executable: pip3
         state: latest
       with_items:
         - pip
@@ -36,7 +33,7 @@
         - docker-compose
     - name: Pull project image
       community.docker.docker_image:
-        name: jpbulloch5/revature_project0
+        name: jpbulloch5/revature_project0 
         source: pull
-        pull:
-          platform: amd64
+      become: yes
+      become_user: root
