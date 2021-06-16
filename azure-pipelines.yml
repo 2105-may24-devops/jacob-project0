@@ -28,9 +28,9 @@ steps:
     venv/bin/python -m pip install -r requirements.txt
   displayName: 'Install dependencies'
 
-- script: |
-    bash ./copy_test.sh && bash append_test.sh && bash write_test.sh
-  displayName: 'Run tests'
+#- script: |
+#    bash ./copy_test.sh && bash append_test.sh && bash write_test.sh
+#  displayName: 'Run tests'
 
 - task: InstallSSHKey@0
   inputs:
