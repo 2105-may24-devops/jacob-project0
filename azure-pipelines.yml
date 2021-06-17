@@ -12,6 +12,22 @@ pool:
 
 steps:
 
+- task: SonarCloudPrepare@1
+  inputs:
+    SonarCloud: 'revature_sonarcloud'
+    organization: '2105-may24-devops'
+    scannerMode: 'CLI'
+    configMode: 'manual'
+    cliProjectKey: '2105-may24-devops_jacob-project0'
+    cliProjectVersion: 
+    cliSources: '.'
+
+- task: SonarCloudAnalyze@1
+
+- task: SonarCloudPublish@1
+  inputs:
+    pollingTimeoutSec: '300'
+
 # Add the SSH key needed to access the VMs
 - task: InstallSSHKey@0
   inputs:
