@@ -10,12 +10,12 @@ all:
         ansible_ssh_private_key_file: ~/.ssh/2105-may24-devops-ubuntu-vm-1_key.pem
         ansible_user: jacob
         ansible_python_interpreter: /usr/bin/python3
-    private:
-      hosts:
-        agent1:
-          ansible_host: 20.97.61.204
-      vars:
-       ansible_ssh_private_key_file: ~/.ssh/private-1_key.pem
-       ansible_user: jacob
-       ansible_python_interpreter: /usr/bin/python3
+    # private:
+    #   hosts:
+    #     agent1:
+    #       ansible_host: 20.97.61.204
+    #   vars:
+    #    ansible_ssh_private_key_file: ~/.ssh/private-1_key.pem
+    #    ansible_user: jacob
+    #    ansible_python_interpreter: /usr/bin/python3
 
