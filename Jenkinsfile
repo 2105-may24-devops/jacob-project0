@@ -17,7 +17,7 @@ pipeline {
                 bash ./copy_test.sh
                 bash ./append_test.sh
                 bash ./write_test.sh
-                '''
+                ''' //testing a change
             }
         }
         stage('deploy') {
