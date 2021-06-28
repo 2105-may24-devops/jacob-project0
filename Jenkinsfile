@@ -23,8 +23,7 @@ pipeline {
         stage('deploy') {
             steps {
                 ansiblePlaybook(
-                    credentialsId: 'trainer_key',
-                    inventory: '20.97.12.217, 13.66.8.112',
+                    inventory: './inventory.yml',
                     playbook: './deployP0.yml',
                     disableHostKeyChecking: true)
             }
