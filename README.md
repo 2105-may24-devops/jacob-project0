@@ -34,7 +34,7 @@ Clone this repo: `git clone https://github.com/2105-may24-devops/jacob-project0.
 
 Usage  
 -----
-1 - Open the YAML file named `inventory` and replace the values within <> as follows:
+1) Open the YAML file named `inventory` and replace the values within <> as follows:
 ```YAML
 all:
   <your-category>:
@@ -48,6 +48,7 @@ all:
       ansible_ssh_private_key_file: <your-ssh-key-file>.pem
       ansible_user: <your-user-name>
 ```
+2) From the cloned directory: `ansible-playbook -i inventory deploy-P0.yml`
 
 License  
 -------
